@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Box, Container, Typography, TextField, InputAdornment, IconButton, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { Search, FilterList, Person, Add, Edit } from '@mui/icons-material';
+import ProductCard from '../../components/ProductCard/ProductCard'
 
 function Home() {
     const [selectedTab, setSelectedTab] = useState('profile'); // Estado para controlar a guia selecionada
@@ -24,7 +25,7 @@ function Home() {
             </Typography>
             <Box marginTop="30px">
                 <TextField
-                    style={{ backgroundColor: 'white' }} 
+                    style={{ backgroundColor: 'white' }}
                     fullWidth
                     variant="outlined"
                     margin="normal"
@@ -46,12 +47,20 @@ function Home() {
                     }}
                 />
             </Box>
+            <ProductCard
+                imageUrl="https://m.media-amazon.com/images/I/61TWfJdgSIL.__AC_SX300_SY300_QL70_ML2_.jpg"
+                description="Nome do Produto"
+                price="$19.99"
+                location="123 Main St, City"
+                marketName="Nome do Mercado"
+                distance="2.5"
+            />
             <Box display="flex" justifyContent="center">
                 <BottomNavigation
                     value={selectedTab}
                     onChange={handleTabChange}
                     showLabels
-                    style={{ position: 'fixed', bottom: 0, width: '420px',backgroundColor: '#D9D9D9'}}
+                    style={{ position: 'fixed', bottom: 0, width: '420px', backgroundColor: '#D9D9D9' }}
                 >
                     <BottomNavigationAction label="Perfil" value="profile" icon={<Person />} />
                     <BottomNavigationAction label="Adicionar" value="add" icon={<Add />} />

@@ -8,6 +8,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { AccountCircle, Lock, ArrowRightAlt } from '@mui/icons-material';
+import {Link} from 'react-router-dom';
 
 function Login() {
   return (
@@ -75,20 +76,27 @@ function Login() {
         }}
       />
       <Typography variant="subtitle1" align="right" marginTop="5px">
+        
         Esqueceu sua senha?
       </Typography>
-      <Button
+      <Link to={'/'}>
+        <Button
         variant="contained"
         fullWidth
         color="primary"
         size="large"
         style={{ borderRadius: '25px', marginTop: '20px' }}
         startIcon={<ArrowRightAlt />}
+        
       >
         ENTRAR
       </Button>
+      </Link>
+      
       <Typography variant="subtitle1" align="center" marginTop="20px">
-        Ainda não possui uma conta? <a href="#">Cadastre-me</a>
+        
+        Ainda não possui uma conta? 
+        <Link to={'/register'}>Cadastre-me</Link>
       </Typography>
     </Container>
   );

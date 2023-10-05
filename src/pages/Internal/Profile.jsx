@@ -1,176 +1,77 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { _updateProfile, loadUser, verifyLogin } from "../../utils/auth";
-import { AvatarComponent, BoxComponent, ButtonComponent, FabComponent, StackComponent, TextFieldComponent, TopMenuComponent } from "../../components";
-import profile from '../../assets/profile.jpeg';
-import { Button, InputAdornment } from "@mui/material";
-import { AccountCircleOutlined, CameraAlt } from "@material-ui/icons";
-import Webcam from 'react-webcam';
-import { set } from "firebase/database";
+import React, { useState } from 'react';
+import { Container, Typography, IconButton, Button, TextField, Box, Avatar } from '@mui/material';
+import { ArrowBack, PhotoCamera } from '@mui/icons-material';
 
-const Profile = ({ setCurrentPath, loggoutRoutes, firebaseApp }) => {
-    const navigate = useNavigate();
-    const [photoURL, setPhotoURL] = useState(null);
-    const [displayName, setDisplayName] = useState(null);
-    const [birthday, setBirthday] = useState(null);
-    const [role, setRole] = useState(null);
-    const [openedCamera, setOpenedCamera] = useState(false);
+function Profile() {
+  // Estados para o nome, data de nascimento e foto do perfil
+  const [name, setName] = useState('Seu Nome');
+  const [birthdate, setBirthdate] = useState('01/01/1990');
+  const [profileImage, setProfileImage] = useState(null);
 
-    const fileRef = useRef(null);
-    const webCamRef = useRef(null);
-
-
-    useEffect(() => {
-        setCurrentPath(window.location.pathname)
-        verifyLogin(loggoutRoutes, window.location.pathname, navigate, firebaseApp);
-        loadUser(firebaseApp, setPhotoURL, setDisplayName, setBirthday, setRole)
-    }, [])
-
-    const saveUserProfile = async () => {
-        await _updateProfile(firebaseApp, {
-            displayName, 
-            photoURL, 
-            birthday, 
-            role
-        })
+  // Função para carregar/atualizar a imagem do perfil
+  const handleImageUpload = (event) => {
+    const selectedImage = event.target.files[0];
+    if (selectedImage) {
+      const imageUrl = URL.createObjectURL(selectedImage);
+      setProfileImage(imageUrl);
     }
+  };
 
-    const openCamera = () => {
-        setOpenedCamera(true);
-    }
-
-    const capturePhoto = () => {
-        const imageSrc = webCamRef.current.getScreenshot();
-        setPhotoURL(imageSrc)
-        setOpenedCamera(false);
-    }
-
-    return <>
-            {
-                openedCamera ? <BoxComponent sx={{
-                    position: 'fixed',
-                    width: '100%',
-                    height: '100%',
-                    zIndex: 9999,
-                    backgroundColor: '#fff',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                                    <Webcam
-                                        audio={false}   
-                                        ref={webCamRef}
-                                        screenshotFormat="image/jpeg"
-                                        videoConstraints={{
-                                            facingMode: "user"
-                                        }}
-                                        style={{
-                                            width: '300px',
-                                            height: '300px',
-                                        }}
-                                    />
-                                    <BoxComponent>
-                                        <ButtonComponent
-                                            fullWidth={true} 
-                                            label="CAPTURAR" onClick={capturePhoto}/>
-                                        <ButtonComponent
-                                            fullWidth={true}
-                                            color="error"
-                                            label="FECHAR" onClick={() => setOpenedCamera(false)}/>
-                                    </BoxComponent>
-                                </BoxComponent>
-                 : null
-            }
-            
-            <TopMenuComponent hasMenu={true} hasArrowBack={false} hasImage={true}/>
-            <StackComponent justifyContent="center" alignItems="center" style={{
-                position: 'relative'
-            }}>
-                <AvatarComponent 
-                    sx={{ width: '250px', height: '250px', mt: 4 }} 
-                    src={photoURL ? photoURL : profile} 
-                    alt={'Profile'}/>
-                <FabComponent
-                    sx={{ mt: 4, mb: 2, position: 'absolute', right: 90, bottom: -20 }}
-                    color="primary"
-                    aria-label="add"
-                    onClick={() => openCamera()}
-                >
-                    <CameraAlt />
-                </FabComponent>
-            </StackComponent>
-
-            <BoxComponent
-                component="div"
-                sx={{ mt: 3, mb:1, pl: 4, pr: 4, marginTop: 16 }}
-                noValidate={true}
-                autoComplete={"off"}
-            >
-                <TextFieldComponent
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <AccountCircleOutlined style={{
-                                    color: "#333"
-                                }}/>
-                            </InputAdornment>
-                            ),
-                      }}
-                    variant="filled" fullWidth={true} label="Usuário" value={displayName} type="text" onChange={(e) => setDisplayName(e.target.value)}/>
-            </BoxComponent>
-
-            <BoxComponent
-                component="div"
-                sx={{ mt: 3, mb:1, pl: 4, pr: 4 }}
-                noValidate={true}
-                autoComplete={"off"}
-            >
-                <TextFieldComponent
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <AccountCircleOutlined style={{
-                                    color: "#333"
-                                }}/>
-                            </InputAdornment>
-                            ),
-                      }}
-                    variant="filled" fullWidth={true} label="Nascimento" value={birthday} type="text" onChange={(e) => setBirthday(e.target.value)}/>
-            </BoxComponent>
-
-            <BoxComponent
-                component="div"
-                sx={{ mt: 3, mb:1, pl: 4, pr: 4 }}
-                noValidate={true}
-                autoComplete={"off"}
-            >
-                <TextFieldComponent
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <AccountCircleOutlined style={{
-                                    color: "#333"
-                                }}/>
-                            </InputAdornment>
-                            ),
-                    }}
-                    variant="filled" fullWidth={true} label="Cargo" value={role} type="text" onChange={(e) => setRole(e.target.value)}/>
-            </BoxComponent>
-
-            <input type="file" id="file" style={{display: 'none'}} ref={fileRef}/>
-
-            <BoxComponent
-                component="div"
-                sx={{ mt: 1, mb:3, pl: 4, pr: 4 }}
-                noValidate={true}
-                autoComplete={"off"}
-            > 
-                <ButtonComponent
-                    fullWidth={true} 
-                    label="ATUALIZAR" onClick={saveUserProfile}/>
-            </BoxComponent>
-           </>;
+  return (
+    <Container maxWidth="sm">
+      <IconButton color="primary" aria-label="voltar">
+        <ArrowBack />
+      </IconButton>
+      <Typography variant="h4" align="center">
+        PriceSpotter
+      </Typography>
+      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" marginTop="20px">
+        <Avatar
+          alt="Foto de Perfil"
+          src={profileImage}
+          sx={{ width: 120, height: 120 }}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          id="profile-image-upload"
+          onChange={handleImageUpload}
+        />
+        <label htmlFor="profile-image-upload">
+          <IconButton
+            color="primary"
+            aria-label="carregar/atualizar imagem"
+            component="span"
+            style={{ marginTop: '10px' }}
+          >
+            <PhotoCamera />
+          </IconButton>
+        </label>
+      </Box>
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        label="Nome"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        sx={{ marginTop: '20px' }}
+      />
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        label="Data de Nascimento"
+        value={birthdate}
+        onChange={(e) => setBirthdate(e.target.value)}
+        sx={{ marginTop: '10px' }}
+      />
+      <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '20px' }}>
+        ATUALIZAR
+      </Button>
+    </Container>
+  );
 }
 
 export default Profile;
