@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography, TextField, Button, IconButton, BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import { Search, Room, Person, Add } from '@mui/icons-material';
 import InputAdornment from '@mui/material/InputAdornment';
+import {Link} from 'react-router-dom';
 
 
 function UpdatePrice() {
@@ -49,9 +50,17 @@ function UpdatePrice() {
       </Button>
       <Box display="flex" justifyContent="center" marginTop="auto">
         <BottomNavigation showLabels style={{ width: '100%' }}>
-          <BottomNavigationAction label="Perfil" icon={<Person />} />
-          <BottomNavigationAction label="Adicionar" icon={<Add />} />
-          <BottomNavigationAction label="Busca" icon={<Search />} />
+          <Link to={'/profile'}>
+            <BottomNavigationAction label="Perfil" icon={<Person />} />
+          </Link>   
+          <Link to={'/insert-products'}>
+            <BottomNavigationAction label="Cadastrar" icon={<Add />} />
+          </Link>
+          <Link to={'/'}>
+            <BottomNavigationAction label="Busca" icon={<Search />} />
+          </Link>
+       
+         
         </BottomNavigation>
       </Box>
     </Container>

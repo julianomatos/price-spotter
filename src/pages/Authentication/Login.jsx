@@ -9,8 +9,24 @@ import {
 } from '@mui/material';
 import { AccountCircle, Lock, ArrowRightAlt } from '@mui/icons-material';
 import {Link} from 'react-router-dom';
+import { auth } from './firebase';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const handleLogin = () => {
+    // Faça a autenticação do usuário com Firebase aqui
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        <Link to={'/'}></Link>
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
   return (
     <Container maxWidth="sm">
       <Typography
@@ -76,22 +92,23 @@ function Login() {
         }}
       />
       <Typography variant="subtitle1" align="right" marginTop="5px">
-        
-        Esqueceu sua senha?
+        <Link to={'/recovery-password'}>
+           Esqueceu sua senha?
+        </Link>
       </Typography>
-      <Link to={'/'}>
+      {/* <Link to={'/'}> */}
         <Button
         variant="contained"
         fullWidth
         color="primary"
         size="large"
+        onClick={handleLogin}
         style={{ borderRadius: '25px', marginTop: '20px' }}
         startIcon={<ArrowRightAlt />}
-        
       >
         ENTRAR
       </Button>
-      </Link>
+      {/* </Link> */}
       
       <Typography variant="subtitle1" align="center" marginTop="20px">
         

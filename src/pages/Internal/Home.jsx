@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Box, Container, Typography, TextField, InputAdornment, IconButton, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { Search, FilterList, Person, Add, Edit } from '@mui/icons-material';
-import ProductCard from '../../components/ProductCard/ProductCard'
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [selectedTab, setSelectedTab] = useState('profile'); // Estado para controlar a guia selecionada
@@ -62,9 +63,15 @@ function Home() {
                     showLabels
                     style={{ position: 'fixed', bottom: 0, width: '420px', backgroundColor: '#D9D9D9' }}
                 >
-                    <BottomNavigationAction label="Perfil" value="profile" icon={<Person />} />
-                    <BottomNavigationAction label="Adicionar" value="add" icon={<Add />} />
-                    <BottomNavigationAction label="Editar" value="edit" icon={<Edit />} />
+                    <Link to={"/profile"}>
+                        <BottomNavigationAction label="Perfil" value="profile" icon={<Person />} />
+                    </Link>
+                    <Link to={"/insert-products"}>
+                        <BottomNavigationAction label="Adicionar" value="add" icon={<Add />} />
+                    </Link>
+                    <Link to={"/update-price"}>
+                        <BottomNavigationAction label="Editar" value="edit" icon={<Edit />} />
+                    </Link>
                 </BottomNavigation>
             </Box>
 

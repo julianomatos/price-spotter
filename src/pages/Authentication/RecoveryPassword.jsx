@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useState } from 'react';
+import React from 'react';
 import Logo from "../../assets/logo.png"
 import {
     Container,
@@ -7,9 +7,9 @@ import {
     TextField,
     Button,
     IconButton,
-    Checkbox,
 } from '@mui/material';
-import { AccountCircle, Lock, ArrowRightAlt } from '@mui/icons-material';
+import { AccountCircle, ArrowRightAlt } from '@mui/icons-material';
+import { Link } from'react-router-dom';
 
 function RecoveryPassword() {
 
@@ -58,7 +58,6 @@ function RecoveryPassword() {
                     ),
                 }}
             />
-          
             <Button
                 variant="contained"
                 fullWidth
@@ -70,7 +69,7 @@ function RecoveryPassword() {
                 RECUPERAR SENHA
             </Button>
             <Typography variant="subtitle1" align="center" marginTop="20px">
-                <a href="#">Entrar</a>
+                <Link to={"/"}>Entrar</Link>
             </Typography>
         </Container>
     );

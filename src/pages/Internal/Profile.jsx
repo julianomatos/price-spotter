@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, IconButton, Button, TextField, Box, Avatar } from '@mui/material';
 import { ArrowBack, PhotoCamera } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   // Estados para o nome, data de nascimento e foto do perfil
@@ -17,11 +18,19 @@ function Profile() {
     }
   };
 
+  // const history = useHistory();
+
+  // const handleVoltar = () => {
+  //   history.goBack();
+  // };
+
   return (
     <Container maxWidth="sm">
-      <IconButton color="primary" aria-label="voltar">
-        <ArrowBack />
-      </IconButton>
+      <Link to={'/'}>
+        <IconButton color="primary" aria-label="voltar">
+          <ArrowBack />
+        </IconButton>
+      </Link>
       <Typography variant="h4" align="center">
         PriceSpotter
       </Typography>

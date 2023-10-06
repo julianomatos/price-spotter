@@ -10,6 +10,7 @@ import {
     Checkbox,
 } from '@mui/material';
 import { AccountCircle, Lock, ArrowRightAlt } from '@mui/icons-material';
+import { Link } from'react-router-dom';
 
 function Register() {
 
@@ -112,7 +113,7 @@ function Register() {
                 Cadastrar
             </Button>
             <Typography variant="subtitle1" align="center" marginTop="20px">
-                <a href="#">Entrar</a>
+            <Link to={"/"}>Entrar</Link>
             </Typography>
         </Container>
     );

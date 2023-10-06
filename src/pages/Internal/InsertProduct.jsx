@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Typography, TextField, Button, IconButton, BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import { PhotoCamera, Person, Search, Edit } from '@mui/icons-material';
+import {Link} from 'react-router-dom';
 
 function InsertProduct() {
     return (
@@ -38,9 +39,15 @@ function InsertProduct() {
             </Button>
             <Box display="flex" justifyContent="center" marginTop="auto">
                 <BottomNavigation showLabels style={{ width: '100%' }}>
-                    <BottomNavigationAction label="Perfil" icon={<Person />} />
-                    <BottomNavigationAction label="Busca" icon={<Search />} />
-                    <BottomNavigationAction label="Editar" icon={<Edit />} />
+                    <Link to={'/profile'}>
+                         <BottomNavigationAction label="Perfil" icon={<Person />} />
+                    </Link>
+                    <Link to={'/'}>
+                        <BottomNavigationAction label="Busca" icon={<Search />} />
+                    </Link>
+                    <Link to={'/update-price'}>
+                         <BottomNavigationAction label="Editar" icon={<Edit />} />
+                    </Link>
                 </BottomNavigation>
             </Box>
         </Container>
