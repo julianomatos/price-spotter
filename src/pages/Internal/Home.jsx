@@ -48,14 +48,14 @@ function Home() {
                     }}
                 />
             </Box>
-            <ProductCard
+            {/* <ProductCard
                 imageUrl="https://m.media-amazon.com/images/I/61TWfJdgSIL.__AC_SX300_SY300_QL70_ML2_.jpg"
                 description="Nome do Produto"
                 price="$19.99"
                 location="123 Main St, City"
                 marketName="Nome do Mercado"
                 distance="2.5"
-            />
+            /> */}
             <Box display="flex" justifyContent="center">
                 <BottomNavigation
                     value={selectedTab}
